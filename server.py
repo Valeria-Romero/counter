@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, redirect
+from flask import Flask, render_template, session, redirect, request
 
 app = Flask(__name__)
 app.secret_key = 'secret'
@@ -21,5 +21,12 @@ def countOne():
     session.clear()
     return redirect('/')
 
+@app.route("/add/number", methods=['POST'])
+def count_numb():
+    numero = int(request.form['cantidad'])
+    session["counter"] += (numero-1) #Aquí hacemos numero - 1 porque al momento de hacer el redirect se suma uno de todas formas
+    return redirect("/")
+
 if __name__ == "__main__":
     app.run( debug = True )
+    
